@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import br.com.api.trabalho.dto.EnderecoDto;
+import br.com.api.trabalho.dto.EnderecoDTO;
 import br.com.api.trabalho.entities.Endereco;
 import br.com.api.trabalho.repositories.EnderecoRepository;
 
@@ -29,7 +29,7 @@ public class EnderecoService {
 		}
 
 		//POST
-		public Endereco salvar(EnderecoDto endereco) {
+		public Endereco salvar(EnderecoDTO endereco) {
 			
 			Endereco viaCep = pesquisarEndereco(endereco.getCep());
 			Endereco enderecoNovo = new Endereco();
