@@ -21,7 +21,11 @@ public class Carro {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_carro")
 	private Integer id;
-
+	
+	@NotNull
+	@Column(name = "ativo_carro")
+	private Boolean ativo = true;
+	
 	@NotNull
 	@Column(name = "marca_carro")
 	private String marca;
@@ -58,11 +62,12 @@ public class Carro {
 	@JoinColumn(name = "pessoa_id")
 	private Pessoa pessoa;
 
-	public Carro(Integer id, @NotNull String marca, @NotNull String modelo, @NotNull LocalDate dataFabricacao,
-			@NotNull LocalDate dataModelo, @NotNull String cor, @NotNull Long renavan, @NotNull String placa,
-			@NotNull String chassi, Pessoa pessoa) {
+	public Carro(Integer id, @NotNull Boolean ativo, @NotNull String marca, @NotNull String modelo,
+			@NotNull LocalDate dataFabricacao, @NotNull LocalDate dataModelo, @NotNull String cor,
+			@NotNull Long renavan, @NotNull String placa, @NotNull String chassi, Pessoa pessoa) {
 		super();
 		this.id = id;
+		this.ativo = ativo;
 		this.marca = marca;
 		this.modelo = modelo;
 		this.dataFabricacao = dataFabricacao;
@@ -80,6 +85,14 @@ public class Carro {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	public Boolean getAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(Boolean ativo) {
+		this.ativo = ativo;
 	}
 
 	public String getMarca() {
@@ -156,9 +169,9 @@ public class Carro {
 
 	@Override
 	public String toString() {
-		return "Carro [id=" + id + ", marca=" + marca + ", modelo=" + modelo + ", dataFabricacao=" + dataFabricacao
-				+ ", dataModelo=" + dataModelo + ", cor=" + cor + ", renavan=" + renavan + ", placa=" + placa
-				+ ", chassi=" + chassi + ", pessoa=" + pessoa + "]";
+		return "Carro [id=" + id + ", ativo=" + ativo + ", marca=" + marca + ", modelo=" + modelo + ", dataFabricacao="
+				+ dataFabricacao + ", dataModelo=" + dataModelo + ", cor=" + cor + ", renavan=" + renavan + ", placa="
+				+ placa + ", chassi=" + chassi + ", pessoa=" + pessoa + "]";
 	}
 
 }

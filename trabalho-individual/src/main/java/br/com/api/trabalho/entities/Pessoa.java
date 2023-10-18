@@ -23,6 +23,10 @@ public class Pessoa {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_pessoa")
 	private Integer id;
+	
+	@NotNull
+	@Column(name = "ativo_pessoa")
+	private Boolean ativo = true;
 
 	@NotNull
 	@Column(name = "cpf")
@@ -58,11 +62,12 @@ public class Pessoa {
 	@JoinColumn(name = "carro_id")
 	private List<Carro> carro;
 
-	public Pessoa(Integer id, @NotNull String cpf, @NotNull String nome, @NotNull LocalDate dataNascimento,
-			@NotNull Long registroHab, @NotNull String carteiraHab, String telefoneFixo, String celular,
-			Endereco endereco, List<Carro> carro) {
+	public Pessoa(Integer id, @NotNull Boolean ativo, @NotNull String cpf, @NotNull String nome,
+			@NotNull LocalDate dataNascimento, @NotNull Long registroHab, @NotNull String carteiraHab,
+			String telefoneFixo, String celular, Endereco endereco, List<Carro> carro) {
 		super();
 		this.id = id;
+		this.ativo = ativo;
 		this.cpf = cpf;
 		this.nome = nome;
 		this.dataNascimento = dataNascimento;
@@ -80,6 +85,14 @@ public class Pessoa {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	public Boolean getAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(Boolean ativo) {
+		this.ativo = ativo;
 	}
 
 	public String getCpf() {
@@ -156,9 +169,9 @@ public class Pessoa {
 
 	@Override
 	public String toString() {
-		return "Pessoa [id=" + id + ", cpf=" + cpf + ", nome=" + nome + ", dataNascimento=" + dataNascimento
-				+ ", registroHab=" + registroHab + ", carteiraHab=" + carteiraHab + ", telefoneFixo=" + telefoneFixo
-				+ ", celular=" + celular + ", endereco=" + endereco + ", carro=" + carro + "]";
+		return "Pessoa [id=" + id + ", ativo=" + ativo + ", cpf=" + cpf + ", nome=" + nome + ", dataNascimento="
+				+ dataNascimento + ", registroHab=" + registroHab + ", carteiraHab=" + carteiraHab + ", telefoneFixo="
+				+ telefoneFixo + ", celular=" + celular + ", endereco=" + endereco + ", carro=" + carro + "]";
 	}
 
 }
