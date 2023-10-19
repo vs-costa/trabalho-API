@@ -12,41 +12,43 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.api.trabalho.entities.Carro;
-import br.com.api.trabalho.services.CarroService;
+import br.com.api.trabalho.dto.EnderecoDTO;
+import br.com.api.trabalho.entities.Endereco;
+import br.com.api.trabalho.services.EnderecoService;
+
 
 
 @RestController
-@RequestMapping("/carro")
+@RequestMapping("/endereco")
+public class EnderecoController {
 
-public class CarroController {
-	
 	@Autowired
-	CarroService carroService;
-	
+	EnderecoService enderecoService;
+
 	@GetMapping("/buscar/{id}")
-	public Carro buscarPorId(@PathVariable Integer id) {
-		return carroService.buscarPorId(id);
+	public Endereco buscarPorId(@PathVariable Integer id) {
+		return enderecoService.buscarPorId(id);
 	}
-	
+
 	@GetMapping("/listar")
-	public List<Carro> listarTodos(){
-		return carroService.listarTodos();
+	public List<Endereco> listarTodos() {
+		return enderecoService.listarTodos();
 	}
 	
 	@PostMapping("/salvar")
-	public Carro salvar(@RequestBody Carro carro) {
-		return carroService.salvar(carro);
+	public Endereco salvar(@RequestBody EnderecoDTO endereco) {
+		return enderecoService.salvar(endereco);
+
 	}
 	
 	@PutMapping("/atualizar/{id}")
-	public Carro atualizar(@PathVariable Integer id, @RequestBody Carro carro) {
-		return carroService.atualizar(id, carro);
+	public Endereco atualizar(@PathVariable Integer id, @RequestBody Endereco endereco) {
+		return enderecoService.atualizar(id, endereco);
 	}
 	
 	@DeleteMapping("/remover/{id}")
-	public void removerLogico(@PathVariable Integer id) {
-		carroService.removerLogico(id);
+	public void remover(@PathVariable Integer id) {
+		enderecoService.remover(id);
 	}
-
 }
+
