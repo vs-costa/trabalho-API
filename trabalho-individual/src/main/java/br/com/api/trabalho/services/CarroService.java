@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.api.trabalho.entities.Carro;
-import br.com.api.trabalho.entities.Pessoa;
 import br.com.api.trabalho.repositories.CarroRepository;
 
 @Service
