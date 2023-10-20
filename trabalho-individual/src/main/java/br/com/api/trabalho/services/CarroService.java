@@ -48,8 +48,8 @@ public class CarroService {
 		if (carro.getCor() != null) {
 			registro.setCor(carro.getCor());
 		}
-		if (carro.getRenavan() != null) {
-			registro.setRenavan(carro.getRenavan());
+		if (carro.getRenavam() != null) {
+			registro.setRenavam(carro.getRenavam());
 		}
 		if (carro.getPlaca() != null) {
 			registro.setPlaca(carro.getPlaca());

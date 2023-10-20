@@ -13,6 +13,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "pessoa")
@@ -27,10 +28,16 @@ public class Pessoa {
 	@NotNull
 	@Column(name = "ativo_pessoa")
 	private Boolean ativo = true;
-
+	
 	@NotNull
+	@Size(max=11)
 	@Column(name = "cpf")
 	private String cpf;
+	
+	@NotNull
+	@Size(max=10)
+	@Column(name = "senha_pessoa")
+	private String senha;
 
 	@NotNull
 	@Column(name = "nome_pessoa")
@@ -41,6 +48,7 @@ public class Pessoa {
 	private LocalDate dataNascimento;
 
 	@NotNull
+	@Size(max=9)
 	@Column(name = "registro_habilitacao")
 	private Long registroHab;
 
@@ -62,8 +70,8 @@ public class Pessoa {
 	@JoinColumn(name = "carro_id")
 	private List<Carro> carro;
 
-	public Pessoa(Integer id, @NotNull Boolean ativo, @NotNull String cpf, @NotNull String nome,
-			@NotNull LocalDate dataNascimento, @NotNull Long registroHab, @NotNull String carteiraHab,
+	public Pessoa(Integer id, @NotNull Boolean ativo, @NotNull @Size(max = 11) String cpf, @NotNull String nome,
+			@NotNull LocalDate dataNascimento, @NotNull @Size(max = 9) Long registroHab, @NotNull String carteiraHab,
 			String telefoneFixo, String celular, Endereco endereco, List<Carro> carro) {
 		super();
 		this.id = id;

@@ -11,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "carro")
@@ -47,14 +48,17 @@ public class Carro {
 	private String cor;
 
 	@NotNull
-	@Column(name = "renavan_carro")
-	private Long renavan;
+	@Size(max=9)
+	@Column(name = "renavam_carro")
+	private String renavam;
 
 	@NotNull
+	@Size(max=7)
 	@Column(name = "placa_carro")
 	private String placa;
 
 	@NotNull
+	@Size(max=17)
 	@Column(name = "chassi_carro")
 	private String chassi;
 
@@ -64,7 +68,8 @@ public class Carro {
 
 	public Carro(Integer id, @NotNull Boolean ativo, @NotNull String marca, @NotNull String modelo,
 			@NotNull LocalDate dataFabricacao, @NotNull LocalDate dataModelo, @NotNull String cor,
-			@NotNull Long renavan, @NotNull String placa, @NotNull String chassi, Pessoa pessoa) {
+			@NotNull @Size(max = 9) String renavam, @NotNull @Size(max = 7) String placa,
+			@NotNull @Size(max = 17) String chassi, Pessoa pessoa) {
 		super();
 		this.id = id;
 		this.ativo = ativo;
@@ -73,7 +78,7 @@ public class Carro {
 		this.dataFabricacao = dataFabricacao;
 		this.dataModelo = dataModelo;
 		this.cor = cor;
-		this.renavan = renavan;
+		this.renavam = renavam;
 		this.placa = placa;
 		this.chassi = chassi;
 		this.pessoa = pessoa;
@@ -135,12 +140,12 @@ public class Carro {
 		this.cor = cor;
 	}
 
-	public Long getRenavan() {
-		return renavan;
+	public String getRenavam() {
+		return renavam;
 	}
 
-	public void setRenavan(Long renavan) {
-		this.renavan = renavan;
+	public void setRenavam(String renavam) {
+		this.renavam = renavam;
 	}
 
 	public String getPlaca() {
@@ -170,8 +175,9 @@ public class Carro {
 	@Override
 	public String toString() {
 		return "Carro [id=" + id + ", ativo=" + ativo + ", marca=" + marca + ", modelo=" + modelo + ", dataFabricacao="
-				+ dataFabricacao + ", dataModelo=" + dataModelo + ", cor=" + cor + ", renavan=" + renavan + ", placa="
+				+ dataFabricacao + ", dataModelo=" + dataModelo + ", cor=" + cor + ", renavam=" + renavam + ", placa="
 				+ placa + ", chassi=" + chassi + ", pessoa=" + pessoa + "]";
 	}
 
+	
 }
