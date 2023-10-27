@@ -47,4 +47,12 @@ public class PessoaController {
 	public void removerLogico(@PathVariable Integer id) {
 		pessoaService.removerLogico(id);
 	}
+	
+	@PutMapping("/ativar/{id}")
+	public void ativarLogico(@PathVariable Integer id) {
+		Pessoa pessoa = pessoaService.buscarPorId(id);
+		pessoaService.ativarLogico(id);
+//		emailService.envioEmailAtivacaoConta(pessoa);
+	}
+	
 }

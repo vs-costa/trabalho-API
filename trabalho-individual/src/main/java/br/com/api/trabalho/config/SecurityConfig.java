@@ -12,7 +12,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import br.com.api.trabalho.repositories.UserRepository;
@@ -49,10 +48,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
         		.csrf().disable()
                 .httpBasic().disable()
                 .authorizeHttpRequests()
-                .antMatchers("/categoria/salvar", "/categoria/listar").permitAll()
-                .antMatchers("/teste/ola").hasRole("USER")
-                .antMatchers("/teste/delete/**").hasRole("ADMIN")
-                .antMatchers("/teste/listar").hasRole("ADMIN")
+                .antMatchers("/user/registro", "/user/login").permitAll()
+                .antMatchers("pessoa/buscar/{id}", "pessoa/atualizar/{id}", "pessoa/remover/{id}", "carro/buscar/{id}", "carro/listar", "carro/salvar", "carro/atualizar/{id}", "/carro/remover{id}").hasRole("PESSOA")
                 .and()
                 .userDetailsService(uds)
                 .exceptionHandling()

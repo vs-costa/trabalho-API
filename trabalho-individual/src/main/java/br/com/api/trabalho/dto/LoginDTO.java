@@ -1,18 +1,20 @@
 package br.com.api.trabalho.dto;
 
+
 public class LoginDTO {
 
-	private String email;
-	private String password;
+    private String email;
+    private String senha;
 
 	public LoginDTO() {
 		super();
+		// TODO Auto-generated constructor stub
 	}
 
-	public LoginDTO(String email, String password) {
+	public LoginDTO(String email, String senha) {
 		super();
 		this.email = email;
-		this.password = password;
+		this.senha = senha;
 	}
 
 	public String getEmail() {
@@ -23,12 +25,12 @@ public class LoginDTO {
 		this.email = email;
 	}
 
-	public String getPassword() {
-		return password;
+	public String getSenha() {
+		return senha;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
+	public void setSenha(String senha) {
+		this.senha = senha;
 	}
 
 }

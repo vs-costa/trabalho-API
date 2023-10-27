@@ -10,9 +10,10 @@ import br.com.api.trabalho.repositories.UserRepository;
 
 @Service
 public class UserService {
+	
 	@Autowired
 	UserRepository userRepository;
-
+	
 	public User findByEmail(String email) {
 		return userRepository.findByEmail(email).get();
 	}
@@ -24,5 +25,7 @@ public class UserService {
 	public List<User> listarTodos() {
 		return userRepository.findAll();
 	}
-
+	public User findById(Integer id) {
+		return userRepository.findById(id).get();
+	}
 }

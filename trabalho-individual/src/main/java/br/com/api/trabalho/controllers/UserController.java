@@ -1,11 +1,13 @@
 package br.com.api.trabalho.controllers;
 
-import java.util.Collections;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
@@ -20,24 +22,37 @@ import br.com.api.trabalho.config.JWTUtil;
 import br.com.api.trabalho.dto.LoginDTO;
 import br.com.api.trabalho.dto.UserDTO;
 import br.com.api.trabalho.entities.Endereco;
+import br.com.api.trabalho.entities.Pessoa;
 import br.com.api.trabalho.entities.Role;
 import br.com.api.trabalho.entities.User;
 import br.com.api.trabalho.enums.TipoRoleEnum;
 import br.com.api.trabalho.repositories.EnderecoRepository;
 import br.com.api.trabalho.repositories.RoleRepository;
+import br.com.api.trabalho.services.EmailService;
 import br.com.api.trabalho.services.EnderecoService;
+import br.com.api.trabalho.services.PessoaService;
 import br.com.api.trabalho.services.UserService;
 
 @RestController
 @RequestMapping("/user")
 public class UserController {
 
+	private EmailService emailService;
+
+	@Autowired
+	public void setEmailService(EmailService emailService) {
+		this.emailService = emailService;
+	}
+
 	@Autowired
 	UserService userService;
 
 	@Autowired
 	EnderecoRepository enderecoRepository;
-	
+
+	@Autowired
+	PessoaService pessoaService;
+
 	@Autowired
 	EnderecoService enderecoService;
 
@@ -54,30 +69,10 @@ public class UserController {
 	private PasswordEncoder passwordEncoder;
 
 	@PostMapping("/registro")
-	public User cadastro(@RequestParam String email, @RequestBody UserDTO user) {
+	public ResponseEntity<String> cadastro(@RequestParam String email, @Valid @RequestBody UserDTO user) {
 
-		Set<String> strRoles = user.getRoles();
-		Set<Role> roles = new HashSet<>();
-
-		if (strRoles == null) {
-			Role userRole = roleRepository.findByName(TipoRoleEnum.ROLE_CLIENTE)
-					.orElseThrow(() -> new RuntimeException("Erro: Role não encontrada."));
-			roles.add(userRole);
-		} else {
-			strRoles.forEach(role -> {
-				switch (role) {
-				case "FUNCIONARIO":
-					Role adminRole = roleRepository.findByName(TipoRoleEnum.ROLE_FUNCIONARIO)
-							.orElseThrow(() -> new RuntimeException("Erro: Role não encontrada."));
-					roles.add(adminRole);
-					break;
-				case "CLIENTE":
-					Role userRole = roleRepository.findByName(TipoRoleEnum.ROLE_CLIENTE)
-							.orElseThrow(() -> new RuntimeException("Erro: Role não encontrada."));
-					roles.add(userRole);
-				}
-			});
-		}
+		Set<String> strRoles = user.getRole();
+		Set<Role> role = new HashSet<>();
 
 		Endereco viaCep = enderecoService.pesquisarEndereco(user.getCep());
 		Endereco enderecoNovo = new Endereco();
@@ -90,38 +85,57 @@ public class UserController {
 		enderecoNovo.setUf(viaCep.getUf());
 		enderecoRepository.save(enderecoNovo);
 
-		User usuarioResumido = new User();
-		usuarioResumido.setNomeUsuario(user.getNomeUsuario());
-		usuarioResumido.setEmail(user.getEmail());
-		usuarioResumido.setRoles(roles);
-		String encodedPass = passwordEncoder.encode(user.getPassword());
-		usuarioResumido.setPassword(encodedPass);
+		if (strRoles == null) {
+			Role userRole = roleRepository.findByName(TipoRoleEnum.ROLE_PESSOA)
+					.orElseThrow(() -> new RuntimeException("Erro: Role não encontrada."));
+			role.add(userRole);
+		} else {
 
-//		emailService.envioEmailCadastro(email, user); vamos ver na aula de terça-feira
+			User usuarioResumido = new User();
+			String encodedPass = passwordEncoder.encode(user.getSenha());
+			usuarioResumido.setEmail(user.getEmail());
+			usuarioResumido.setRole(role);
+			usuarioResumido.setSenha(encodedPass);
+			userService.save(usuarioResumido);
 
-		return userService.save(usuarioResumido);
+			Pessoa pessoa = new Pessoa();
+			pessoa.setCpf(user.getCpf());
+			pessoa.setEmail(user.getEmail());
+			pessoa.setNome(user.getNome());
+			pessoa.setDataNascimento(user.getDataNascimento());
+			pessoa.setNumeroCnh(user.getNumeroCnh());
+			pessoa.setCategoriaHab(user.getCategoriaHab());
+			pessoa.setTelefoneFixo(user.getTelefoneFixo());
+			pessoa.setCelular(user.getCelular());
+			pessoa.setEndereco(enderecoNovo);
+			pessoa.setSenha(encodedPass);
+			pessoa.setUser(usuarioResumido);
+			pessoaService.salvar(pessoa);
+
+			emailService.envioEmailCadastro(user);
+
+		}
+		return ResponseEntity.status(HttpStatus.CREATED).body("Cadastro efetuado com sucesso!");
 	}
 
 	@PostMapping("/login")
-	public Map<String, Object> login(@RequestBody LoginDTO body) {
+	public ResponseEntity<String> login(@Valid @RequestBody LoginDTO body) {
 		try {
 			UsernamePasswordAuthenticationToken authInputToken = new UsernamePasswordAuthenticationToken(
-					body.getEmail(), body.getPassword());
+					body.getEmail(), body.getSenha());
 
 			authManager.authenticate(authInputToken);
 
 			User user = userService.findByEmail(body.getEmail());
 			User usuarioResumido = new User();
-			usuarioResumido.setNomeUsuario(user.getNomeUsuario());
 			usuarioResumido.setEmail(user.getEmail());
 			usuarioResumido.setIdUser(user.getIdUser());
-			usuarioResumido.setRoles(user.getRoles());
+			usuarioResumido.setRole(user.getRole());
 			String token = jwtUtil.generateTokenWithUserData(usuarioResumido);
 
-			return Collections.singletonMap("jwt-token", token);
+			return ResponseEntity.status(HttpStatus.OK).body("Login efetuado com sucesso!\n\nToken:\n\n" + token);
 		} catch (AuthenticationException authExc) {
 			throw new RuntimeException("Credenciais Invalidas");
 		}
 	}
-
 }

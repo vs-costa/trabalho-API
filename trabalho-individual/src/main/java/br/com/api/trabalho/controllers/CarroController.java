@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.api.trabalho.entities.Carro;
+import br.com.api.trabalho.entities.Pessoa;
 import br.com.api.trabalho.services.CarroService;
 
 
@@ -47,6 +48,13 @@ public class CarroController {
 	@DeleteMapping("/remover/{id}")
 	public void removerLogico(@PathVariable Integer id) {
 		carroService.removerLogico(id);
+	}
+	
+	@PutMapping("/ativar/{id}")
+	public void ativarLogico(@PathVariable Integer id) {
+		Carro carro = carroService.buscarPorId(id);
+		carroService.ativarLogico(id);
+//		emailService.envioEmailAtivacaoConta(carro);
 	}
 
 }

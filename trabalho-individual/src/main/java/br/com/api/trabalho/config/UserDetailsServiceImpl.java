@@ -1,7 +1,6 @@
 package br.com.api.trabalho.config;
 
 import java.util.Optional;
-
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,11 +42,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		}
 		return new org.springframework.security.core.userdetails.User(
 				email,
-				userRes.get().getPassword(), 
+				userRes.get().getSenha(),
 				roleRepo.roles(email) 
 				.stream()
 				.map(role -> new SimpleGrantedAuthority(role.getName().name()))
-				.collect(Collectors.toList())
+				.collect(Collectors.toList()) 
 				);
 	}
 }

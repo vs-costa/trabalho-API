@@ -10,29 +10,29 @@ import br.com.api.trabalho.repositories.PessoaRepository;
 
 @Service
 public class PessoaService {
-	
+
 	@Autowired
 	PessoaRepository pessoaRepository;
 
-	//Get ID
+	// Get ID
 	public Pessoa buscarPorId(Integer id) {
 		return pessoaRepository.findById(id).get();
 	}
-	
-	//Get Listar
-	public List<Pessoa> listarTodos(){
+
+	// Get Listar
+	public List<Pessoa> listarTodos() {
 		return pessoaRepository.findAll();
 	}
-	
-	//POST
+
+	// POST
 	public Pessoa salvar(Pessoa pessoa) {
 		return pessoaRepository.save(pessoa);
 	}
-	
-	//PUT
+
+	// PUT
 	public Pessoa atualizar(Integer id, Pessoa pessoa) {
 		Pessoa registro = buscarPorId(id);
-		
+
 		if (pessoa.getCpf() != null) {
 			registro.setCpf(pessoa.getCpf());
 		}
@@ -42,13 +42,13 @@ public class PessoaService {
 		if (pessoa.getDataNascimento() != null) {
 			registro.setDataNascimento(pessoa.getDataNascimento());
 		}
-		if (pessoa.getRegistroHab() != null) {
-			registro.setRegistroHab(pessoa.getRegistroHab());
+		if (pessoa.getNumeroCnh() != null) {
+			registro.setNumeroCnh(pessoa.getNumeroCnh());
 		}
-		if (pessoa.getCarteiraHab() != null) {
-			registro.setCarteiraHab(pessoa.getCarteiraHab());
+		if (pessoa.getCategoriaHab() != null) {
+			registro.setCategoriaHab(pessoa.getCategoriaHab());
 		}
-		if (pessoa.getTelefoneFixo() !=null) {
+		if (pessoa.getTelefoneFixo() != null) {
 			registro.setTelefoneFixo(pessoa.getTelefoneFixo());
 		}
 		if (pessoa.getCelular() != null) {
@@ -57,16 +57,25 @@ public class PessoaService {
 		registro.setId(id);
 		return pessoaRepository.save(registro);
 	}
-	
-	//Delete lógico
+
+	// Delete lógico
 	public void removerLogico(Integer id) {
 		Pessoa pessoa = buscarPorId(id);
-		
+
 		if (pessoa != null) {
 			pessoa.setAtivo(false);
 			pessoaRepository.save(pessoa);
-			
+
 		}
 	}
-	
+
+	// Ativar Lógico
+	public void ativarLogico(Integer id) {
+		Pessoa pessoa = pessoaRepository.findById(id).get();
+
+		if (pessoa != null) {
+			pessoa.setAtivo(true);
+			pessoaRepository.save(pessoa);
+		}
+	}
 }

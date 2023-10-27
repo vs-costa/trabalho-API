@@ -45,15 +45,15 @@ public class SwaggerConfig {
                 .securityContexts(Collections.singletonList(securityContext()))
 				.securitySchemes(Arrays.asList(apiKey()))
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("br.com.api.g5.controllers"))
+                .apis(RequestHandlerSelectors.basePackage("br.com.api.trabalho.controllers"))
                 .paths(PathSelectors.any())
                 .build();
     }
 
     private ApiInfo apiInfo() {
         ApiInfo apiInfo = new ApiInfoBuilder()
-                .title("Documentação Projeto E-Commerce Tradicional")
-                .description("Projeto grupo 5")
+                .title("Trabalho Individual Victor Soares")
+                .description("Relação Pessoa - Carro")
                 .license("Apache license version 2.0")
                 .version("8.2.0")
                 .build();

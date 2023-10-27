@@ -12,11 +12,18 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import org.hibernate.validator.constraints.br.CPF;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+
 @Entity
-@Table(name = "pessoa")
+@Table(name = "tb_pessoa")
 
 public class Pessoa {
 
@@ -24,41 +31,49 @@ public class Pessoa {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_pessoa")
 	private Integer id;
-	
+
 	@NotNull
 	@Column(name = "ativo_pessoa")
 	private Boolean ativo = true;
-	
-	@NotNull
-	@Size(max=11)
+
+	@NotNull(message = "Campo CPF não pode ser nulo.")
+	@CPF
+	@Size(max = 14)
 	@Column(name = "cpf")
 	private String cpf;
-	
-	@NotNull
-	@Size(max=10)
+
+	@NotNull(message = "Campo e-mail não pode ser nulo.")
+	@Email
+	@Pattern(regexp = "^[A-Za-z0-9+_.-]+@(.+)$")
+	@Column(name = "email_pessoa")
+	private String email;
+
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+	@NotNull(message = "Campo senha não pode ser nulo.")
 	@Column(name = "senha_pessoa")
 	private String senha;
 
-	@NotNull
+	@NotNull(message = "Campo nome não pode ser nulo.")
 	@Column(name = "nome_pessoa")
 	private String nome;
 
-	@NotNull
+	@NotNull(message = "Campo data de nascimento não pode ser nulo")
 	@Column(name = "data_nascimento")
 	private LocalDate dataNascimento;
 
-	@NotNull
-	@Size(max=9)
-	@Column(name = "registro_habilitacao")
-	private Long registroHab;
+	@NotNull(message = "Campo Número CNH não pode ser nulo")
+	@Column(name = "numero_cnh")
+	private Long numeroCnh;
 
-	@NotNull
-	@Column(name = "carteira_habilitacao")
-	private String carteiraHab;
+	@NotNull(message = "Campo Categoria Habilitação não pode ser nulo")
+	@Column(name = "categoria_habilitação")
+	private String categoriaHab;
 
+	@Pattern(regexp = "\\(\\d{2}\\) \\d{4}-\\d{4}")
 	@Column(name = "telefone_fixo")
 	private String telefoneFixo;
 
+	@Pattern(regexp = "\\(\\d{2}\\) \\d{5}-\\d{4}")
 	@Column(name = "celular")
 	private String celular;
 
@@ -70,21 +85,41 @@ public class Pessoa {
 	@JoinColumn(name = "carro_id")
 	private List<Carro> carro;
 
-	public Pessoa(Integer id, @NotNull Boolean ativo, @NotNull @Size(max = 11) String cpf, @NotNull String nome,
-			@NotNull LocalDate dataNascimento, @NotNull @Size(max = 9) Long registroHab, @NotNull String carteiraHab,
-			String telefoneFixo, String celular, Endereco endereco, List<Carro> carro) {
+	@OneToOne
+	@JoinColumn(name = "user_id")
+	private User user;
+
+	public Pessoa(Integer id, @NotNull Boolean ativo,
+			@NotNull(message = "Campo CPF não pode ser nulo.") @CPF @Size(max = 14) String cpf,
+			@NotNull(message = "Campo e-mail não pode ser nulo.") @Email @Pattern(regexp = "^[A-Za-z0-9+_.-]+@(.+)$") String email,
+			@NotNull(message = "Campo senha não pode ser nulo.") String senha,
+			@NotNull(message = "Campo nome não pode ser nulo.") String nome,
+			@NotNull(message = "Campo data de nascimento não pode ser nulo") LocalDate dataNascimento,
+			@NotNull(message = "Campo Número CNH não pode ser nulo") @Size(max = 11) Long numeroCnh,
+			@NotNull(message = "Campo Categoria Habilitação não pode ser nulo") String categoriaHab,
+			@Pattern(regexp = "\\(\\d{2}\\) \\d{4}-\\d{4}") String telefoneFixo,
+			@Pattern(regexp = "\\(\\d{2}\\) \\d{5}-\\d{4}") String celular, Endereco endereco, List<Carro> carro,
+			User user) {
 		super();
 		this.id = id;
 		this.ativo = ativo;
 		this.cpf = cpf;
+		this.email = email;
+		this.senha = senha;
 		this.nome = nome;
 		this.dataNascimento = dataNascimento;
-		this.registroHab = registroHab;
-		this.carteiraHab = carteiraHab;
+		this.numeroCnh = numeroCnh;
+		this.categoriaHab = categoriaHab;
 		this.telefoneFixo = telefoneFixo;
 		this.celular = celular;
 		this.endereco = endereco;
 		this.carro = carro;
+		this.user = user;
+	}
+
+	public Pessoa() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
 
 	public Integer getId() {
@@ -111,6 +146,22 @@ public class Pessoa {
 		this.cpf = cpf;
 	}
 
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
+
 	public String getNome() {
 		return nome;
 	}
@@ -127,20 +178,20 @@ public class Pessoa {
 		this.dataNascimento = dataNascimento;
 	}
 
-	public Long getRegistroHab() {
-		return registroHab;
+	public Long getNumeroCnh() {
+		return numeroCnh;
 	}
 
-	public void setRegistroHab(Long registroHab) {
-		this.registroHab = registroHab;
+	public void setNumeroCnh(Long numeroCnh) {
+		this.numeroCnh = numeroCnh;
 	}
 
-	public String getCarteiraHab() {
-		return carteiraHab;
+	public String getCategoriaHab() {
+		return categoriaHab;
 	}
 
-	public void setCarteiraHab(String carteiraHab) {
-		this.carteiraHab = carteiraHab;
+	public void setCategoriaHab(String categoriaHab) {
+		this.categoriaHab = categoriaHab;
 	}
 
 	public String getTelefoneFixo() {
@@ -175,11 +226,20 @@ public class Pessoa {
 		this.carro = carro;
 	}
 
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
 	@Override
 	public String toString() {
-		return "Pessoa [id=" + id + ", ativo=" + ativo + ", cpf=" + cpf + ", nome=" + nome + ", dataNascimento="
-				+ dataNascimento + ", registroHab=" + registroHab + ", carteiraHab=" + carteiraHab + ", telefoneFixo="
-				+ telefoneFixo + ", celular=" + celular + ", endereco=" + endereco + ", carro=" + carro + "]";
+		return "Pessoa [id=" + id + ", ativo=" + ativo + ", cpf=" + cpf + ", email=" + email + ", senha=" + senha
+				+ ", nome=" + nome + ", dataNascimento=" + dataNascimento + ", numeroCnh=" + numeroCnh
+				+ ", categoriaHab=" + categoriaHab + ", telefoneFixo=" + telefoneFixo + ", celular=" + celular
+				+ ", endereco=" + endereco + ", carro=" + carro + ", user=" + user + "]";
 	}
 
 }

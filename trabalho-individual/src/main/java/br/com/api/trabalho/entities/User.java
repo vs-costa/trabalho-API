@@ -1,5 +1,6 @@
 package br.com.api.trabalho.entities;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -10,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -21,28 +23,27 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer idUser;
 
-	private String nomeUsuario;
-
+	@NotNull(message = "Campo e-mail não pode ser nulo")
 	private String email;
 
 	@ManyToMany
 	@JoinTable(name = "usuario_role", joinColumns = @JoinColumn(name = "usuario_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
-	private Set<Role> roles;
+	private Set<Role> role = new HashSet<>();
 
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-	private String password;
+	private String senha;
 
 	public User() {
 		super();
 	}
 
-	public User(Integer idUser, String nomeUsuario, String email, Endereco endereco, Set<Role> roles, String password) {
+	public User(Integer idUser, @NotNull(message = "Campo e-mail não pode ser nulo") String email, Set<Role> role,
+			String senha) {
 		super();
 		this.idUser = idUser;
-		this.nomeUsuario = nomeUsuario;
 		this.email = email;
-		this.roles = roles;
-		this.password = password;
+		this.role = role;
+		this.senha = senha;
 	}
 
 	public Integer getIdUser() {
@@ -53,14 +54,6 @@ public class User {
 		this.idUser = idUser;
 	}
 
-	public String getNomeUsuario() {
-		return nomeUsuario;
-	}
-
-	public void setNomeUsuario(String nomeUsuario) {
-		this.nomeUsuario = nomeUsuario;
-	}
-
 	public String getEmail() {
 		return email;
 	}
@@ -69,26 +62,25 @@ public class User {
 		this.email = email;
 	}
 
-	public String getPassword() {
-		return password;
+	public Set<Role> getRole() {
+		return role;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
+	public void setRole(Set<Role> role) {
+		this.role = role;
 	}
 
-	public Set<Role> getRoles() {
-		return roles;
+	public String getSenha() {
+		return senha;
 	}
 
-	public void setRoles(Set<Role> roles) {
-		this.roles = roles;
+	public void setSenha(String senha) {
+		this.senha = senha;
 	}
 
 	@Override
 	public String toString() {
-		return "User [idUser=" + idUser + ", nomeUsuario=" + nomeUsuario + ", email=" + email + ", roles=" + roles
-				+ ", password=" + password + "]";
+		return "User [idUser=" + idUser + ", email=" + email + ", role=" + role + ", senha=" + senha + "]";
 	}
 
 }

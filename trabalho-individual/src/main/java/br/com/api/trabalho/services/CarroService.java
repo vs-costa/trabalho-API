@@ -10,29 +10,29 @@ import br.com.api.trabalho.repositories.CarroRepository;
 
 @Service
 public class CarroService {
-	
+
 	@Autowired
 	CarroRepository carroRepository;
 
-	//GET Id
+	// GET Id
 	public Carro buscarPorId(Integer id) {
 		return carroRepository.findById(id).get();
 	}
-	
-	//GET Listar
-	public List<Carro> listarTodos(){
+
+	// GET Listar
+	public List<Carro> listarTodos() {
 		return carroRepository.findAll();
 	}
-	
-	//POST
+
+	// POST
 	public Carro salvar(Carro carro) {
 		return carroRepository.save(carro);
 	}
-	
-	//PUT
+
+	// PUT
 	public Carro atualizar(Integer id, Carro carro) {
 		Carro registro = buscarPorId(id);
-		
+
 		if (carro.getMarca() != null) {
 			registro.setMarca(carro.getMarca());
 		}
@@ -58,17 +58,27 @@ public class CarroService {
 			registro.setChassi(carro.getChassi());
 		}
 		registro.setId(id);
-		return carroRepository.save(registro);	
+		return carroRepository.save(registro);
 	}
-	
-	//Delete lógico
+
+	// Delete lógico
 	public void removerLogico(Integer id) {
 		Carro carro = buscarPorId(id);
-		
+
 		if (carro != null) {
 			carro.setAtivo(false);
 			carroRepository.save(carro);
 		}
+
 	}
-	
+
+	// Ativar Lógico
+	public void ativarLogico(Integer id) {
+		Carro carro = carroRepository.findById(id).get();
+
+		if (carro != null) {
+			carro.setAtivo(true);
+			carroRepository.save(carro);
+		}
+	}
 }

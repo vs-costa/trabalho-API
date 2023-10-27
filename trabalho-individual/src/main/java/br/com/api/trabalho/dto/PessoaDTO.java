@@ -1,9 +1,8 @@
 package br.com.api.trabalho.dto;
 
 import java.time.LocalDate;
-import java.util.Set;
 
-public class UserDTO {
+public class PessoaDTO {
 
 	private String cpf;
 	private String email;
@@ -17,16 +16,15 @@ public class UserDTO {
 	private String cep;
 	private String numero;
 	private String complementoAdicional;
-	private Set<String> role;
 	
-	public UserDTO() {
+	public PessoaDTO() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public UserDTO(String cpf, String email, String senha, String nome, LocalDate dataNascimento, Long numeroCnh,
+	public PessoaDTO(String cpf, String email, String senha, String nome, LocalDate dataNascimento, Long numeroCnh,
 			String categoriaHab, String telefoneFixo, String celular, String cep, String numero,
-			String complementoAdicional, Set<String> role) {
+			String complementoAdicional) {
 		super();
 		this.cpf = cpf;
 		this.email = email;
@@ -40,7 +38,6 @@ public class UserDTO {
 		this.cep = cep;
 		this.numero = numero;
 		this.complementoAdicional = complementoAdicional;
-		this.role = role;
 	}
 
 	public String getCpf() {
@@ -139,12 +136,12 @@ public class UserDTO {
 		this.complementoAdicional = complementoAdicional;
 	}
 
-	public Set<String> getRole() {
-		return role;
-	}
-
-	public void setRole(Set<String> role) {
-		this.role = role;
+	@Override
+	public String toString() {
+		return "PessoaDTO [cpf=" + cpf + ", email=" + email + ", senha=" + senha + ", nome=" + nome
+				+ ", dataNascimento=" + dataNascimento + ", numeroCnh=" + numeroCnh + ", categoriaHab=" + categoriaHab
+				+ ", telefoneFixo=" + telefoneFixo + ", celular=" + celular + ", cep=" + cep + ", numero=" + numero
+				+ ", complementoAdicional=" + complementoAdicional + "]";
 	}
 
 }

@@ -2,8 +2,7 @@ package br.com.api.trabalho.enums;
 
 public enum TipoRoleEnum {
 
-	ROLE_CLIENTE("CLIENTE"),
-	ROLE_FUNCIONARIO("FUNCIONARIO");
+	ROLE_PESSOA("PESSOA");
 
 	private String tipo;
 

@@ -20,7 +20,7 @@ public class Role {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@NotNull
+	@NotNull(message="É necessário definir uma role de usuário.")
 	@Enumerated(EnumType.STRING)
 	@Column(name = "name")
 	private TipoRoleEnum name;
