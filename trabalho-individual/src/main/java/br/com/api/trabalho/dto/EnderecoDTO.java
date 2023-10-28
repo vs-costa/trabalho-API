@@ -4,13 +4,18 @@ public class EnderecoDTO {
 
 	private String cep;
 	private String complemento;
-	private String numero;
+	private String numeroResidência;
 
-	public EnderecoDTO(String cep, String complemento, String numero) {
+	public EnderecoDTO() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public EnderecoDTO(String cep, String complemento, String numeroResidência) {
 		super();
 		this.cep = cep;
 		this.complemento = complemento;
-		this.numero = numero;
+		this.numeroResidência = numeroResidência;
 	}
 
 	public String getCep() {
@@ -29,12 +34,12 @@ public class EnderecoDTO {
 		this.complemento = complemento;
 	}
 
-	public String getNumero() {
-		return numero;
+	public String getNumeroResidência() {
+		return numeroResidência;
 	}
 
-	public void setNumero(String numero) {
-		this.numero = numero;
+	public void setNumeroResidência(String numeroResidência) {
+		this.numeroResidência = numeroResidência;
 	}
 
 }

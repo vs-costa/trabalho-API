@@ -10,10 +10,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.api.trabalho.dto.CarroAtualizarDTO;
+import br.com.api.trabalho.dto.CarroDTO;
 import br.com.api.trabalho.entities.Carro;
-import br.com.api.trabalho.entities.Pessoa;
 import br.com.api.trabalho.services.CarroService;
 
 
@@ -26,22 +28,22 @@ public class CarroController {
 	CarroService carroService;
 	
 	@GetMapping("/buscar/{id}")
-	public Carro buscarPorId(@PathVariable Integer id) {
+	public CarroDTO buscarPorId(@PathVariable Integer id) {
 		return carroService.buscarPorId(id);
 	}
 	
 	@GetMapping("/listar")
-	public List<Carro> listarTodos(){
+	public List<CarroDTO> listarTodos(){
 		return carroService.listarTodos();
 	}
-	
+
 	@PostMapping("/salvar")
-	public Carro salvar(@RequestBody Carro carro) {
-		return carroService.salvar(carro);
+	public Carro salvar(@RequestBody CarroDTO carroDTO, @RequestParam String nomePessoa) {
+		return carroService.salvar(carroDTO, nomePessoa);
 	}
 	
 	@PutMapping("/atualizar/{id}")
-	public Carro atualizar(@PathVariable Integer id, @RequestBody Carro carro) {
+	public CarroAtualizarDTO atualizar(@PathVariable Integer id, @RequestBody CarroAtualizarDTO carro) {
 		return carroService.atualizar(id, carro);
 	}
 	
@@ -52,7 +54,7 @@ public class CarroController {
 	
 	@PutMapping("/ativar/{id}")
 	public void ativarLogico(@PathVariable Integer id) {
-		Carro carro = carroService.buscarPorId(id);
+		CarroDTO carroDTO = carroService.buscarPorId(id);
 		carroService.ativarLogico(id);
 //		emailService.envioEmailAtivacaoConta(carro);
 	}

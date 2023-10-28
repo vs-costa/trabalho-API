@@ -38,7 +38,7 @@ public class EnderecoService {
 			enderecoNovo.setComplemento(endereco.getComplemento());
 			enderecoNovo.setLocalidade(viaCep.getLocalidade());
 			enderecoNovo.setLogradouro(viaCep.getLogradouro());
-			enderecoNovo.setNumero(endereco.getNumero());
+			enderecoNovo.setNumeroResidencia(endereco.getNumeroResidência());
 			enderecoNovo.setUf(viaCep.getUf());
 			return enderecoRepository.save(enderecoNovo);
 		}

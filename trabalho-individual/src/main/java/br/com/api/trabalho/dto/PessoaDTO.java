@@ -6,7 +6,6 @@ public class PessoaDTO {
 
 	private String cpf;
 	private String email;
-	private String senha;
 	private String nome;
 	private LocalDate dataNascimento;
 	private Long numeroCnh;
@@ -14,7 +13,7 @@ public class PessoaDTO {
 	private String telefoneFixo;
 	private String celular;
 	private String cep;
-	private String numero;
+	private String numeroResidencia;
 	private String complementoAdicional;
 	
 	public PessoaDTO() {
@@ -22,13 +21,12 @@ public class PessoaDTO {
 		// TODO Auto-generated constructor stub
 	}
 
-	public PessoaDTO(String cpf, String email, String senha, String nome, LocalDate dataNascimento, Long numeroCnh,
-			String categoriaHab, String telefoneFixo, String celular, String cep, String numero,
+	public PessoaDTO(String cpf, String email, String nome, LocalDate dataNascimento, Long numeroCnh,
+			String categoriaHab, String telefoneFixo, String celular, String cep, String numeroResidencia,
 			String complementoAdicional) {
 		super();
 		this.cpf = cpf;
 		this.email = email;
-		this.senha = senha;
 		this.nome = nome;
 		this.dataNascimento = dataNascimento;
 		this.numeroCnh = numeroCnh;
@@ -36,7 +34,7 @@ public class PessoaDTO {
 		this.telefoneFixo = telefoneFixo;
 		this.celular = celular;
 		this.cep = cep;
-		this.numero = numero;
+		this.numeroResidencia = numeroResidencia;
 		this.complementoAdicional = complementoAdicional;
 	}
 
@@ -54,14 +52,6 @@ public class PessoaDTO {
 
 	public void setEmail(String email) {
 		this.email = email;
-	}
-
-	public String getSenha() {
-		return senha;
-	}
-
-	public void setSenha(String senha) {
-		this.senha = senha;
 	}
 
 	public String getNome() {
@@ -120,12 +110,12 @@ public class PessoaDTO {
 		this.cep = cep;
 	}
 
-	public String getNumero() {
-		return numero;
+	public String getNumeroResidencia() {
+		return numeroResidencia;
 	}
 
-	public void setNumero(String numero) {
-		this.numero = numero;
+	public void setNumeroResidencia(String numeroResidencia) {
+		this.numeroResidencia = numeroResidencia;
 	}
 
 	public String getComplementoAdicional() {
@@ -135,13 +125,5 @@ public class PessoaDTO {
 	public void setComplementoAdicional(String complementoAdicional) {
 		this.complementoAdicional = complementoAdicional;
 	}
-
-	@Override
-	public String toString() {
-		return "PessoaDTO [cpf=" + cpf + ", email=" + email + ", senha=" + senha + ", nome=" + nome
-				+ ", dataNascimento=" + dataNascimento + ", numeroCnh=" + numeroCnh + ", categoriaHab=" + categoriaHab
-				+ ", telefoneFixo=" + telefoneFixo + ", celular=" + celular + ", cep=" + cep + ", numero=" + numero
-				+ ", complementoAdicional=" + complementoAdicional + "]";
-	}
-
+	
 }

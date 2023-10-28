@@ -1,54 +1,32 @@
 package br.com.api.trabalho.dto;
 
-import java.time.LocalDate;
-import java.util.Set;
+public class PessoaAtualizarDTO {
 
-public class UserDTO {
-
-	private String cpf;
 	private String email;
 	private String senha;
-	private String nome;
-	private LocalDate dataNascimento;
-	private Long numeroCnh;
 	private String categoriaHab;
 	private String telefoneFixo;
 	private String celular;
 	private String cep;
 	private String numeroResidencia;
 	private String complementoAdicional;
-	private Set<String> role;
-	
-	public UserDTO() {
+
+	public PessoaAtualizarDTO() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public UserDTO(String cpf, String email, String senha, String nome, LocalDate dataNascimento, Long numeroCnh,
-			String categoriaHab, String telefoneFixo, String celular, String cep, String numeroResidencia,
-			String complementoAdicional, Set<String> role) {
+	public PessoaAtualizarDTO(String email, String senha, String categoriaHab, String telefoneFixo, String celular,
+			String cep, String numeroResidencia, String complementoAdicional) {
 		super();
-		this.cpf = cpf;
 		this.email = email;
 		this.senha = senha;
-		this.nome = nome;
-		this.dataNascimento = dataNascimento;
-		this.numeroCnh = numeroCnh;
 		this.categoriaHab = categoriaHab;
 		this.telefoneFixo = telefoneFixo;
 		this.celular = celular;
 		this.cep = cep;
 		this.numeroResidencia = numeroResidencia;
 		this.complementoAdicional = complementoAdicional;
-		this.role = role;
-	}
-
-	public String getCpf() {
-		return cpf;
-	}
-
-	public void setCpf(String cpf) {
-		this.cpf = cpf;
 	}
 
 	public String getEmail() {
@@ -65,30 +43,6 @@ public class UserDTO {
 
 	public void setSenha(String senha) {
 		this.senha = senha;
-	}
-
-	public String getNome() {
-		return nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
-	public LocalDate getDataNascimento() {
-		return dataNascimento;
-	}
-
-	public void setDataNascimento(LocalDate dataNascimento) {
-		this.dataNascimento = dataNascimento;
-	}
-
-	public Long getNumeroCnh() {
-		return numeroCnh;
-	}
-
-	public void setNumeroCnh(Long numeroCnh) {
-		this.numeroCnh = numeroCnh;
 	}
 
 	public String getCategoriaHab() {
@@ -139,12 +93,4 @@ public class UserDTO {
 		this.complementoAdicional = complementoAdicional;
 	}
 
-	public Set<String> getRole() {
-		return role;
-	}
-
-	public void setRole(Set<String> role) {
-		this.role = role;
-	}
-	
 }

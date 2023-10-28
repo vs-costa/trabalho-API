@@ -1,7 +1,5 @@
 package br.com.api.trabalho.entities;
 
-import java.time.LocalDate;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -22,11 +20,11 @@ public class Carro {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_carro")
 	private Integer id;
-	
+
 	@NotNull
 	@Column(name = "ativo_carro")
 	private Boolean ativo = true;
-	
+
 	@NotNull
 	@Column(name = "marca_carro")
 	private String marca;
@@ -36,29 +34,29 @@ public class Carro {
 	private String modelo;
 
 	@NotNull
-	@Column(name = "fabricacao_carro")
-	private LocalDate dataFabricacao;
+	@Column(name = "ano_fabricacao_carro")
+	private Integer anoFabricacao;
 
 	@NotNull
 	@Column(name = "ano_modelo_carro")
-	private LocalDate dataModelo;
+	private Integer anoModelo;
 
 	@NotNull
 	@Column(name = "cor_carro")
 	private String cor;
 
 	@NotNull
-	@Size(max=9)
+	@Size(max = 9)
 	@Column(name = "renavam_carro")
 	private String renavam;
 
 	@NotNull
-	@Size(max=7)
+	@Size(max = 7)
 	@Column(name = "placa_carro")
 	private String placa;
 
 	@NotNull
-	@Size(max=17)
+	@Size(max = 17)
 	@Column(name = "chassi_carro")
 	private String chassi;
 
@@ -66,8 +64,13 @@ public class Carro {
 	@JoinColumn(name = "pessoa_id")
 	private Pessoa pessoa;
 
+	public Carro() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 	public Carro(Integer id, @NotNull Boolean ativo, @NotNull String marca, @NotNull String modelo,
-			@NotNull LocalDate dataFabricacao, @NotNull LocalDate dataModelo, @NotNull String cor,
+			@NotNull Integer anoFabricacao, @NotNull Integer anoModelo, @NotNull String cor,
 			@NotNull @Size(max = 9) String renavam, @NotNull @Size(max = 7) String placa,
 			@NotNull @Size(max = 17) String chassi, Pessoa pessoa) {
 		super();
@@ -75,8 +78,8 @@ public class Carro {
 		this.ativo = ativo;
 		this.marca = marca;
 		this.modelo = modelo;
-		this.dataFabricacao = dataFabricacao;
-		this.dataModelo = dataModelo;
+		this.anoFabricacao = anoFabricacao;
+		this.anoModelo = anoModelo;
 		this.cor = cor;
 		this.renavam = renavam;
 		this.placa = placa;
@@ -116,20 +119,20 @@ public class Carro {
 		this.modelo = modelo;
 	}
 
-	public LocalDate getDataFabricacao() {
-		return dataFabricacao;
+	public Integer getAnoFabricacao() {
+		return anoFabricacao;
 	}
 
-	public void setDataFabricacao(LocalDate dataFabricacao) {
-		this.dataFabricacao = dataFabricacao;
+	public void setAnoFabricacao(Integer anoFabricacao) {
+		this.anoFabricacao = anoFabricacao;
 	}
 
-	public LocalDate getDataModelo() {
-		return dataModelo;
+	public Integer getAnoModelo() {
+		return anoModelo;
 	}
 
-	public void setDataModelo(LocalDate dataModelo) {
-		this.dataModelo = dataModelo;
+	public void setAnoModelo(Integer anoModelo) {
+		this.anoModelo = anoModelo;
 	}
 
 	public String getCor() {
@@ -174,10 +177,9 @@ public class Carro {
 
 	@Override
 	public String toString() {
-		return "Carro [id=" + id + ", ativo=" + ativo + ", marca=" + marca + ", modelo=" + modelo + ", dataFabricacao="
-				+ dataFabricacao + ", dataModelo=" + dataModelo + ", cor=" + cor + ", renavam=" + renavam + ", placa="
+		return "Carro [id=" + id + ", ativo=" + ativo + ", marca=" + marca + ", modelo=" + modelo + ", anoFabricacao="
+				+ anoFabricacao + ", anoModelo=" + anoModelo + ", cor=" + cor + ", renavam=" + renavam + ", placa="
 				+ placa + ", chassi=" + chassi + ", pessoa=" + pessoa + "]";
 	}
 
-	
 }

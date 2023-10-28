@@ -1,69 +1,111 @@
 package br.com.api.trabalho.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.api.trabalho.dto.CarroAtualizarDTO;
+import br.com.api.trabalho.dto.CarroDTO;
 import br.com.api.trabalho.entities.Carro;
+import br.com.api.trabalho.entities.Pessoa;
+import br.com.api.trabalho.mapper.CarroMapper;
 import br.com.api.trabalho.repositories.CarroRepository;
+import br.com.api.trabalho.repositories.PessoaRepository;
 
 @Service
 public class CarroService {
 
 	@Autowired
 	CarroRepository carroRepository;
+	
+	@Autowired
+	CarroMapper carroMapper;
+	
+	@Autowired
+	PessoaRepository pessoaRepository;
 
 	// GET Id
-	public Carro buscarPorId(Integer id) {
-		return carroRepository.findById(id).get();
+	public CarroDTO buscarPorId(Integer id) {
+		CarroDTO infoCarro = new CarroDTO();
+		Carro carro = carroRepository.findById(id).get();
+		infoCarro  = carroMapper.converterCarroDTO(carro);
+		return infoCarro;
 	}
 
 	// GET Listar
-	public List<Carro> listarTodos() {
-		return carroRepository.findAll();
+	public List<CarroDTO> listarTodos() {
+		List<CarroDTO> infoCarros = new ArrayList<>();
+		List<Carro> carros = carroRepository.findAll();
+		for (Carro carro : carros) {
+			infoCarros.add(carroMapper.converterCarroDTO(carro));
+		}
+		return infoCarros;
 	}
 
 	// POST
-	public Carro salvar(Carro carro) {
-		return carroRepository.save(carro);
+	public Carro salvar(CarroDTO carroDTO, String nomePessoa) {
+	    Pessoa pessoa = pessoaRepository.findByNome(nomePessoa).orElse(null);
+	    
+	    if (pessoa != null) {
+	        Carro carro = new Carro();
+	        Carro carroSalvar = new Carro();
+			carroSalvar.setMarca(carroDTO.getMarca());
+			carroSalvar.setModelo(carroDTO.getModelo());
+			carroSalvar.setAnoFabricacao(carroDTO.getAnoFabricacao());
+			carroSalvar.setAnoModelo(carroDTO.getAnoModelo());
+			carroSalvar.setCor(carroDTO.getCor());
+			carroSalvar.setRenavam(carroDTO.getRenavam());
+			carroSalvar.setPlaca(carroDTO.getPlaca());
+			carroSalvar.setChassi(carroDTO.getChassi());
+	        carroSalvar.setPessoa(pessoa);
+	        
+	        return carroRepository.save(carro);
+//	        Carro carroSalvo = carroRepository.save(carro);
+//	        return carroMapper.converterCarroDTO(carroSalvo);
+	    } else {
+	        return null;
+	    }
 	}
 
 	// PUT
-	public Carro atualizar(Integer id, Carro carro) {
-		Carro registro = buscarPorId(id);
+	public CarroAtualizarDTO atualizar(Integer id, CarroAtualizarDTO carroDTO) {
+		Carro registroAntigo = carroRepository.findById(id).get();
 
-		if (carro.getMarca() != null) {
-			registro.setMarca(carro.getMarca());
+		if (carroDTO.getMarca() != null) {
+			registroAntigo.setMarca(carroDTO.getMarca());
 		}
-		if (carro.getModelo() != null) {
-			registro.setModelo(carro.getModelo());
+		if (carroDTO.getModelo() != null) {
+			registroAntigo.setModelo(carroDTO.getModelo());
 		}
-		if (carro.getDataFabricacao() != null) {
-			registro.setDataFabricacao(carro.getDataFabricacao());
+		if (carroDTO.getAnoFabricacao() != null) {
+			registroAntigo.setAnoFabricacao(carroDTO.getAnoFabricacao());
 		}
-		if (carro.getDataModelo() != null) {
-			registro.setDataModelo(carro.getDataModelo());
+		if (carroDTO.getAnoModelo() != null) {
+			registroAntigo.setAnoModelo(carroDTO.getAnoModelo());
 		}
-		if (carro.getCor() != null) {
-			registro.setCor(carro.getCor());
+		if (carroDTO.getCor() != null) {
+			registroAntigo.setCor(carroDTO.getCor());
 		}
-		if (carro.getRenavam() != null) {
-			registro.setRenavam(carro.getRenavam());
+		if (carroDTO.getRenavam() != null) {
+			registroAntigo.setRenavam(carroDTO.getRenavam());
 		}
-		if (carro.getPlaca() != null) {
-			registro.setPlaca(carro.getPlaca());
+		if (carroDTO.getPlaca() != null) {
+			registroAntigo.setPlaca(carroDTO.getPlaca());
 		}
-		if (carro.getChassi() != null) {
-			registro.setChassi(carro.getChassi());
+		if (carroDTO.getChassi() != null) {
+			registroAntigo.setChassi(carroDTO.getChassi());
 		}
-		registro.setId(id);
-		return carroRepository.save(registro);
+		CarroAtualizarDTO carroConvertido = carroMapper.converterCarroAtualizarDTO(registroAntigo);
+		registroAntigo.setId(id);
+		carroRepository.save(registroAntigo);
+		return carroConvertido;
 	}
 
 	// Delete lógico
 	public void removerLogico(Integer id) {
-		Carro carro = buscarPorId(id);
+		Carro carro = carroRepository.findById(id).get();
 
 		if (carro != null) {
 			carro.setAtivo(false);

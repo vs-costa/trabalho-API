@@ -26,8 +26,8 @@ public class Endereco {
 	private String logradouro;
 
 	@NotNull
-	@Column(name = "numero")
-	private String numero;
+	@Column(name = "numero_residencia")
+	private String numeroResidencia;
 
 	@NotNull
 	@Column(name = "novo_complemento")
@@ -44,6 +44,24 @@ public class Endereco {
 	@NotNull
 	@Column(name = "uf")
 	private String uf;
+
+	public Endereco() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public Endereco(Integer id, @NotNull String cep, @NotNull String logradouro, @NotNull String numeroResidencia,
+			@NotNull String complemento, @NotNull String bairro, @NotNull String localidade, @NotNull String uf) {
+		super();
+		this.id = id;
+		this.cep = cep;
+		this.logradouro = logradouro;
+		this.numeroResidencia = numeroResidencia;
+		this.complemento = complemento;
+		this.bairro = bairro;
+		this.localidade = localidade;
+		this.uf = uf;
+	}
 
 	public Integer getId() {
 		return id;
@@ -69,12 +87,12 @@ public class Endereco {
 		this.logradouro = logradouro;
 	}
 
-	public String getNumero() {
-		return numero;
+	public String getNumeroResidencia() {
+		return numeroResidencia;
 	}
 
-	public void setNumero(String numero) {
-		this.numero = numero;
+	public void setNumeroResidencia(String numeroResidencia) {
+		this.numeroResidencia = numeroResidencia;
 	}
 
 	public String getComplemento() {
@@ -107,28 +125,6 @@ public class Endereco {
 
 	public void setUf(String uf) {
 		this.uf = uf;
-	}
-
-	public Endereco() {
-	}
-
-	public Endereco(Integer id, @NotNull String cep, @NotNull String logradouro, @NotNull String numero,
-			@NotNull String complemento, @NotNull String bairro, @NotNull String localidade, @NotNull String uf) {
-		this.id = id;
-		this.cep = cep;
-		this.logradouro = logradouro;
-		this.numero = numero;
-		this.complemento = complemento;
-		this.bairro = bairro;
-		this.localidade = localidade;
-		this.uf = uf;
-	}
-
-	@Override
-	public String toString() {
-		return "Endereco [id=" + id + ", cep=" + cep + ", logradouro=" + logradouro + ", numero=" + numero
-				+ ", complemento=" + complemento + ", bairro=" + bairro + ", localidade=" + localidade + ", uf=" + uf
-				+ "]";
 	}
 
 }

@@ -6,13 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.api.trabalho.entities.Pessoa;
+import br.com.api.trabalho.dto.PessoaAtualizarDTO;
+import br.com.api.trabalho.dto.PessoaDTO;
 import br.com.api.trabalho.services.PessoaService;
 
 @RestController
@@ -24,23 +24,24 @@ public class PessoaController {
 	PessoaService pessoaService;
 	
 	@GetMapping("/buscar/{id}")
-	public Pessoa buscarPorId(@PathVariable Integer id) {
+	public PessoaDTO buscarPorId(@PathVariable Integer id) {
 		return pessoaService.buscarPorId(id);
 	}
 	
 	@GetMapping("/listar")
-	public List<Pessoa> listarTodos(){
+	public List<PessoaDTO> listarTodos(){
 		return pessoaService.listarTodos();
 	}
 	
-	@PostMapping("/salvar")
-	public Pessoa salvar(@RequestBody Pessoa pessoa) {
-		return pessoaService.salvar(pessoa);
-	}
+//	Não preciso de salvar em Pessoa Service porque já salva a pessoa ao cadastrar no User
+//	@PostMapping("/salvar")
+//	public Pessoa salvar(@RequestBody Pessoa pessoa) {
+//		return pessoaService.salvar(pessoa);
+//	}
 	
 	@PutMapping("/atualizar/{id}")
-	public Pessoa atualizar(@PathVariable Integer id, @RequestBody Pessoa pessoa) {
-		return pessoaService.atualizar(id, pessoa);
+	public PessoaAtualizarDTO atualizar(@PathVariable Integer id, @RequestBody PessoaAtualizarDTO pessoaDTO) {
+		return pessoaService.atualizar(id, pessoaDTO);
 	}
 	
 	@DeleteMapping("/remover/{id}")
@@ -50,7 +51,7 @@ public class PessoaController {
 	
 	@PutMapping("/ativar/{id}")
 	public void ativarLogico(@PathVariable Integer id) {
-		Pessoa pessoa = pessoaService.buscarPorId(id);
+		PessoaDTO pessoa = pessoaService.buscarPorId(id);
 		pessoaService.ativarLogico(id);
 //		emailService.envioEmailAtivacaoConta(pessoa);
 	}

@@ -81,7 +81,7 @@ public class UserController {
 		enderecoNovo.setComplemento(user.getComplementoAdicional());
 		enderecoNovo.setLocalidade(viaCep.getLocalidade());
 		enderecoNovo.setLogradouro(viaCep.getLogradouro());
-		enderecoNovo.setNumero(user.getNumero());
+		enderecoNovo.setNumeroResidencia(user.getNumeroResidencia());
 		enderecoNovo.setUf(viaCep.getUf());
 		enderecoRepository.save(enderecoNovo);
 

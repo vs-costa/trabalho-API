@@ -1,8 +1,7 @@
 package br.com.api.trabalho.dto;
 
-public class CarroDTO {
+public class CarroAtualizarDTO {
 
-	// Informações da entidade Carro
 	private String marca;
 	private String modelo;
 	private Integer anoFabricacao;
@@ -12,18 +11,13 @@ public class CarroDTO {
 	private String placa;
 	private String chassi;
 
-	// Informações da entidade Pessoa
-	private String categoriaHab;
-	private String nome;
-	private Long numeroCnh;
-
-	public CarroDTO() {
+	public CarroAtualizarDTO() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public CarroDTO(String marca, String modelo, Integer anoFabricacao, Integer anoModelo, String cor, String renavam,
-			String placa, String chassi, String categoriaHab, String nome, Long numeroCnh) {
+	public CarroAtualizarDTO(String marca, String modelo, Integer anoFabricacao, Integer anoModelo, String cor,
+			String renavam, String placa, String chassi) {
 		super();
 		this.marca = marca;
 		this.modelo = modelo;
@@ -33,9 +27,6 @@ public class CarroDTO {
 		this.renavam = renavam;
 		this.placa = placa;
 		this.chassi = chassi;
-		this.categoriaHab = categoriaHab;
-		this.nome = nome;
-		this.numeroCnh = numeroCnh;
 	}
 
 	public String getMarca() {
@@ -100,30 +91,6 @@ public class CarroDTO {
 
 	public void setChassi(String chassi) {
 		this.chassi = chassi;
-	}
-
-	public String getCategoriaHab() {
-		return categoriaHab;
-	}
-
-	public void setCategoriaHab(String categoriaHab) {
-		this.categoriaHab = categoriaHab;
-	}
-
-	public String getNome() {
-		return nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
-	public Long getNumeroCnh() {
-		return numeroCnh;
-	}
-
-	public void setNumeroCnh(Long numeroCnh) {
-		this.numeroCnh = numeroCnh;
 	}
 
 }
