@@ -55,7 +55,7 @@ public class SwaggerConfig {
                 .title("Trabalho Individual Victor Soares")
                 .description("Relação Pessoa - Carro")
                 .license("Apache license version 2.0")
-                .version("10.1.0")
+                .version("10.1.1")
                 .build();
         return apiInfo;
     }
