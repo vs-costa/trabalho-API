@@ -10,6 +10,6 @@ import br.com.api.trabalho.entities.Pessoa;
 @Repository
 public interface PessoaRepository extends JpaRepository<Pessoa, Integer>{
 	
-	Optional<Pessoa> findByNome(String nome);
+	Optional<Pessoa> findByEmail(String email);
 
 }

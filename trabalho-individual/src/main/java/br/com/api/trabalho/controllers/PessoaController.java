@@ -1,7 +1,5 @@
 package br.com.api.trabalho.controllers;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,20 +21,23 @@ public class PessoaController {
 	@Autowired
 	PessoaService pessoaService;
 	
+//	Não consegui implementar os e-mails. deixei comentado
+//	private EmailService emailService;
+//    @Autowired
+//    public void setEmailService(EmailService emailService) {
+//        this.emailService = emailService;
+//    }	
+		
 	@GetMapping("/buscar/{id}")
 	public PessoaDTO buscarPorId(@PathVariable Integer id) {
 		return pessoaService.buscarPorId(id);
 	}
 	
-	@GetMapping("/listar")
-	public List<PessoaDTO> listarTodos(){
-		return pessoaService.listarTodos();
-	}
 	
-//	Não preciso de salvar em Pessoa Service porque já salva a pessoa ao cadastrar no User
-//	@PostMapping("/salvar")
-//	public Pessoa salvar(@RequestBody Pessoa pessoa) {
-//		return pessoaService.salvar(pessoa);
+//	O Escopo do negócio não prevê listar todos
+//	@GetMapping("/listar")
+//	public List<PessoaDTO> listarTodos(){
+//		return pessoaService.listarTodos();
 //	}
 	
 	@PutMapping("/atualizar/{id}")
@@ -46,12 +47,14 @@ public class PessoaController {
 	
 	@DeleteMapping("/remover/{id}")
 	public void removerLogico(@PathVariable Integer id) {
+//		PessoaDTO pessoa = pessoaService.buscarPorId(id);
 		pessoaService.removerLogico(id);
+//		emailService.envioEmailEncerramentoConta(pessoa);
 	}
 	
 	@PutMapping("/ativar/{id}")
 	public void ativarLogico(@PathVariable Integer id) {
-		PessoaDTO pessoa = pessoaService.buscarPorId(id);
+//		PessoaDTO pessoa = pessoaService.buscarPorId(id);
 		pessoaService.ativarLogico(id);
 //		emailService.envioEmailAtivacaoConta(pessoa);
 	}

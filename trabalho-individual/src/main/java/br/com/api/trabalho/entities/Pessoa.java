@@ -1,7 +1,6 @@
 package br.com.api.trabalho.entities;
 
 import java.time.LocalDate;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,7 +8,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
@@ -20,7 +18,6 @@ import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.br.CPF;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-
 
 @Entity
 @Table(name = "tb_pessoa")
@@ -81,9 +78,9 @@ public class Pessoa {
 	@JoinColumn(name = "endereco_id")
 	private Endereco endereco;
 
-	@OneToMany
+	@OneToOne
 	@JoinColumn(name = "carro_id")
-	private List<Carro> carro;
+	private Carro carro;
 
 	@OneToOne
 	@JoinColumn(name = "user_id")
@@ -95,11 +92,10 @@ public class Pessoa {
 			@NotNull(message = "Campo senha não pode ser nulo.") String senha,
 			@NotNull(message = "Campo nome não pode ser nulo.") String nome,
 			@NotNull(message = "Campo data de nascimento não pode ser nulo") LocalDate dataNascimento,
-			@NotNull(message = "Campo Número CNH não pode ser nulo") @Size(max = 11) Long numeroCnh,
+			@NotNull(message = "Campo Número CNH não pode ser nulo") Long numeroCnh,
 			@NotNull(message = "Campo Categoria Habilitação não pode ser nulo") String categoriaHab,
 			@Pattern(regexp = "\\(\\d{2}\\) \\d{4}-\\d{4}") String telefoneFixo,
-			@Pattern(regexp = "\\(\\d{2}\\) \\d{5}-\\d{4}") String celular, Endereco endereco, List<Carro> carro,
-			User user) {
+			@Pattern(regexp = "\\(\\d{2}\\) \\d{5}-\\d{4}") String celular, Endereco endereco, Carro carro, User user) {
 		super();
 		this.id = id;
 		this.ativo = ativo;
@@ -218,11 +214,11 @@ public class Pessoa {
 		this.endereco = endereco;
 	}
 
-	public List<Carro> getCarro() {
+	public Carro getCarro() {
 		return carro;
 	}
 
-	public void setCarro(List<Carro> carro) {
+	public void setCarro(Carro carro) {
 		this.carro = carro;
 	}
 

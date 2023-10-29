@@ -1,7 +1,5 @@
 package br.com.api.trabalho.controllers;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,20 +24,23 @@ public class CarroController {
 	
 	@Autowired
 	CarroService carroService;
+
+//	Não consegui implementar os e-mails. deixei comentado
+//	private EmailService emailService;
+//    @Autowired
+//    public void setEmailService(EmailService emailService) {
+//        this.emailService = emailService;
+//    }
 	
 	@GetMapping("/buscar/{id}")
 	public CarroDTO buscarPorId(@PathVariable Integer id) {
 		return carroService.buscarPorId(id);
 	}
 	
-	@GetMapping("/listar")
-	public List<CarroDTO> listarTodos(){
-		return carroService.listarTodos();
-	}
-
 	@PostMapping("/salvar")
-	public Carro salvar(@RequestBody CarroDTO carroDTO, @RequestParam String nomePessoa) {
-		return carroService.salvar(carroDTO, nomePessoa);
+	public Carro salvar(@RequestBody CarroDTO carroDTO, @RequestParam String emailPessoa) {
+		return carroService.salvar(carroDTO, emailPessoa);
+//		emailService.envioEmailCadastroCarro(carroDTO);
 	}
 	
 	@PutMapping("/atualizar/{id}")
@@ -49,14 +50,16 @@ public class CarroController {
 	
 	@DeleteMapping("/remover/{id}")
 	public void removerLogico(@PathVariable Integer id) {
+//		CarroDTO carro = carroService.buscarPorId(id);
 		carroService.removerLogico(id);
+//		emailService.envioEmailEncerramentoCarro(carro);
 	}
 	
 	@PutMapping("/ativar/{id}")
 	public void ativarLogico(@PathVariable Integer id) {
-		CarroDTO carroDTO = carroService.buscarPorId(id);
+//		CarroDTO carroDTO = carroService.buscarPorId(id);
 		carroService.ativarLogico(id);
-//		emailService.envioEmailAtivacaoConta(carro);
+//		emailService.envioEmailAtivacaoCarro(carroDTO);
 	}
 
 }

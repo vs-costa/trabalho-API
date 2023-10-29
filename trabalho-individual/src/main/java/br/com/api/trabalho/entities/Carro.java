@@ -6,7 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -21,7 +21,6 @@ public class Carro {
 	@Column(name = "id_carro")
 	private Integer id;
 
-	@NotNull
 	@Column(name = "ativo_carro")
 	private Boolean ativo = true;
 
@@ -46,7 +45,6 @@ public class Carro {
 	private String cor;
 
 	@NotNull
-	@Size(max = 9)
 	@Column(name = "renavam_carro")
 	private String renavam;
 
@@ -60,7 +58,7 @@ public class Carro {
 	@Column(name = "chassi_carro")
 	private String chassi;
 
-	@ManyToOne
+	@OneToOne
 	@JoinColumn(name = "pessoa_id")
 	private Pessoa pessoa;
 
@@ -69,7 +67,7 @@ public class Carro {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Carro(Integer id, @NotNull Boolean ativo, @NotNull String marca, @NotNull String modelo,
+	public Carro(Integer id, Boolean ativo, @NotNull String marca, @NotNull String modelo,
 			@NotNull Integer anoFabricacao, @NotNull Integer anoModelo, @NotNull String cor,
 			@NotNull @Size(max = 9) String renavam, @NotNull @Size(max = 7) String placa,
 			@NotNull @Size(max = 17) String chassi, Pessoa pessoa) {

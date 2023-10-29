@@ -45,11 +45,10 @@ public class CarroService {
 	}
 
 	// POST
-	public Carro salvar(CarroDTO carroDTO, String nomePessoa) {
-	    Pessoa pessoa = pessoaRepository.findByNome(nomePessoa).orElse(null);
+	public Carro salvar(CarroDTO carroDTO, String emailPessoa) {
+	    Pessoa pessoa = pessoaRepository.findByEmail(emailPessoa).get();
 	    
 	    if (pessoa != null) {
-	        Carro carro = new Carro();
 	        Carro carroSalvar = new Carro();
 			carroSalvar.setMarca(carroDTO.getMarca());
 			carroSalvar.setModelo(carroDTO.getModelo());
@@ -61,9 +60,7 @@ public class CarroService {
 			carroSalvar.setChassi(carroDTO.getChassi());
 	        carroSalvar.setPessoa(pessoa);
 	        
-	        return carroRepository.save(carro);
-//	        Carro carroSalvo = carroRepository.save(carro);
-//	        return carroMapper.converterCarroDTO(carroSalvo);
+	        return carroRepository.save(carroSalvar);
 	    } else {
 	        return null;
 	    }
